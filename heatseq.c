@@ -22,22 +22,21 @@ int main(int argc, char *argv[]){
     //create 3D array with alternating flag
 
     double h[N][N][2];
-    double g[N][N][2];
+    double output_matrix[N][N];
 
+    
 
     //initialize the 3D array
 
     for (i=0;i<N;i++){
         for (j=0;j<N;j++){
-            h[i][j][0] = 0;
-            h[i][j][1] = 0;
-            g[i][j][0] = 0;
-            g[i][j][1] = 0;
+            h[i][j][0] = 0.0;
+            h[i][j][1] = 0.0;
         }
     }
 
 
-    //initialize wall temperatures as 20 degrees
+    //initialize room temperatures as 20 degrees
 
     for (i=0;i<N;i++){
         for (j=0;j<N;j++){
@@ -46,11 +45,12 @@ int main(int argc, char *argv[]){
 			h[N - 1][i][0] = 20.0;
 			h[i][N - 1][0] = 20.0;
 			h[i][j][0] = 20.0;
-			g[0][i][0] = 20.0;
-			g[0][i][0] = 20.0;
-			g[N - 1][i][0] = 20.0;
-			g[i][N - 1][0] = 20.0;
-			g[i][j][0] = 20.0;
+            
+            h[0][i][1] = 20.0;
+			h[i][0][1] = 20.0;
+			h[N - 1][i][1] = 20.0;
+			h[i][N - 1][1] = 20.0;
+			h[i][j][1] = 20.0;
         }
     }
 
@@ -64,7 +64,6 @@ int main(int argc, char *argv[]){
     //initialize temperature of fireplace
 	for (i = fireplace_start; i < fireplace_end; i++) {
 		h[0][i][0] = 100.0;
-		g[0][i][0] = 100.0;
 	}
 
     //starting temperatures
@@ -82,9 +81,9 @@ int main(int argc, char *argv[]){
     start_time = omp_get_wtime();
     
     for (int iterations=0; iterations < T; iterations++){
-        for (i=0; i<N-1; i++){
+        for (i=1; i<N-1; i++){
             for (j=1; j < N-1; j++){
-                h[i][j][next] = 0.25 * (h[i - 1][j][current] + h[i + 1][j][current] + h[i][j - 1][current] + h[i][j + 1][current]  );
+                h[i][j][next] = 0.25 * (h[i - 1][j][current] + h[i + 1][j][current] + h[i][j - 1][current] + h[i][j + 1][current]);
             }
         }
         current = next;
@@ -102,6 +101,18 @@ int main(int argc, char *argv[]){
 	}
 
     printf("\nTime taken for sequential output %f \n", end_time-start_time);
+
+    FILE *fp = fopen("output_seq","w");
+    
+    for (i = 0; i < N; i++) {
+		for (j = 0; j < N; j++) {
+            output_matrix[i][j] = h[i][j][current];
+            fprintf(fp,"%f ",output_matrix[i][j]);
+        }
+        fprintf(fp,"\n");
+	}
+
+    fclose(fp);
 
     return 0;
 
