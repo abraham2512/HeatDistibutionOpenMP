@@ -19,19 +19,14 @@ int main(int argc, char *argv[]){
 	current = 0;
 	next = 1;
 
-    //create 3D array with alternating flag
+    // //create 3D array with alternating flag
 
-    double h[N][N][2];
-    double output_matrix[N][N];
-
-    
-
-    //initialize the 3D array
-
+    double ***h = NULL;
+    h = (double ***)calloc(N,sizeof(double **));
     for (i=0;i<N;i++){
+        h[i] = (double **)calloc(N,sizeof(double *));
         for (j=0;j<N;j++){
-            h[i][j][0] = 0.0;
-            h[i][j][1] = 0.0;
+            h[i][j] = (double*)calloc(2,sizeof(double));
         }
     }
 
@@ -106,8 +101,7 @@ int main(int argc, char *argv[]){
     
     for (i = 0; i < N; i++) {
 		for (j = 0; j < N; j++) {
-            output_matrix[i][j] = h[i][j][current];
-            fprintf(fp,"%f ",output_matrix[i][j]);
+            fprintf(fp,"%f ",h[i][j][current]);
         }
         fprintf(fp,"\n");
 	}
