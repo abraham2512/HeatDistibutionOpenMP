@@ -19,16 +19,18 @@ int main(int argc, char *argv[]){
 	current = 0;
 	next = 1;
 
-    // //create 3D array with alternating flag
+    // //create 3D array and initialize 0
 
-    double ***h = NULL;
-    h = (double ***)calloc(N,sizeof(double **));
-    for (i=0;i<N;i++){
-        h[i] = (double **)calloc(N,sizeof(double *));
-        for (j=0;j<N;j++){
-            h[i][j] = (double*)calloc(2,sizeof(double));
-        }
-    }
+    double h[N][N][2];
+
+    // double ***h = NULL;
+    // h = (double ***)calloc(N,sizeof(double **));
+    // for (i=0;i<N;i++){
+    //     h[i] = (double **)calloc(N,sizeof(double *));
+    //     for (j=0;j<N;j++){
+    //         h[i][j] = (double*)calloc(2,sizeof(double));
+    //     }
+    // }
 
 
     //initialize room temperatures as 20 degrees

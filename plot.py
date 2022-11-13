@@ -4,15 +4,11 @@ import seaborn as sns
 import pandas as pd
 from pylab import savefig
 
+file_name = "output_"+"parallel"
 
-matrix = pd.read_csv('output_seq',delimiter=" ")
+matrix = pd.read_csv(file_name,delimiter=" ")
 matrix = matrix.apply(pd.to_numeric)
 
-#array = np.array(matrixDF)
 svm = sns.heatmap(matrix)
 
-
-plt.savefig('heatmap.png', dpi=400)
-
-#plt.imshow(a, cmap='hot', interpolation='nearest')
-#plt.show()
+plt.savefig(file_name+'.png', dpi=400)

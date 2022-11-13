@@ -19,7 +19,11 @@ int main(int argc, char *argv[]){
 	current = 0;
 	next = 1;
 
-    // //create 3D array with alternating flag
+
+
+    //double h[N][N][2];
+
+    // //create 3D array and initialize 0
 
     double ***h = (double ***)calloc(N,sizeof(double **));
     for (i=0;i<N;i++){
@@ -95,9 +99,9 @@ int main(int argc, char *argv[]){
 		printf("\n");
 	}
 
-    printf("\nTime taken for sequential output %f \n", end_time-start_time);
+    printf("\nTime taken for parallel output %f \n", end_time-start_time);
 
-    FILE *fp = fopen("output_seq","w");
+    FILE *fp = fopen("output_parallel","w");
     
     for (i = 0; i < N; i++) {
 		for (j = 0; j < N; j++) {
